@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: Masomaniton
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -16,30 +16,29 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      header: "IBM Plex Serif" # Clean, book-like typography
+      body: "Source Serif 4" # Readable print-style font
+      code: "IBM Plex Mono" # Pixel/technical accent
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#F4F1E8" # Slightly warm e-paper field
+        lightgray: "#D8D3C7" # Fibre-like divider tone
+        gray: "#817C72" # Quiet metadata gray
+        darkgray: "#3B3933" # Graphite body ink
+        dark: "#1C1B18" # Dense printed heading ink
+        secondary: "#48453E" # Muted monochrome links
+        tertiary: "#706B61" # Restrained secondary accent
+        highlight: "#6B66590F"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#171816" # Dark graphite, not pure black
+        lightgray: "#30312C" # Subtle e-ink panel separation
+        gray: "#898B82" # Low-glare metadata
+        darkgray: "#D8D8CD" # Soft off-white reading ink
+        dark: "#F1F0E6" # Pale paper for headings
+        secondary: "#D0D1C4" # Neutral light links
+        tertiary: "#AEB0A4" # Muted supporting accent
+        highlight: "#E6E7DA17"
+        textHighlight: "#B4A76A66"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -58,6 +57,9 @@ plugins:
         dark: github-dark
       keepBackground: false
     order: 20
+  - source: "./quartz/plugins/local/remarkable-svg-image"
+    enabled: true
+    order: 25
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
@@ -86,7 +88,7 @@ plugins:
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
-      markdownLinkResolution: shortest
+      markdownLinkResolution: absolute
     order: 60
   - source: "@quartz-community/description"
     enabled: true
@@ -111,7 +113,7 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
   - source: "@quartz-themes/core"
-    enabled: true
+    enabled: false
     options:
       theme: default
       mode: both

@@ -1,3 +1,298 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+[saved-theme="dark"] img[src*="assets/remarkable/"] {
+  filter: brightness(0) #{"invert(1)"};
+}
+
+// In a note, use ![[assets/remarkable/notebook/page.svg|left]] or |right.
+// An optional pixel width may follow the side: |right|240.
+// Floats keep the article linear while allowing nearby prose to wrap naturally.
+.markdown-rendered img.remarkable-float {
+  display: block;
+  max-width: min(42%, 20rem);
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.markdown-rendered img.remarkable-float-left {
+  float: left;
+  clear: left;
+  margin-right: 1.25rem;
+}
+
+.markdown-rendered img.remarkable-float-right {
+  float: right;
+  clear: right;
+  margin-left: 1.25rem;
+}
+
+// Keep the adjacent paragraph in one consistent column. A normal float lets
+// its later lines run underneath the drawing once the drawing ends.
+.markdown-rendered img.remarkable-float-left + p,
+.markdown-rendered img.remarkable-float-right + p {
+  display: flow-root;
+}
+
+// A new section should always begin below any preceding floated drawing.
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6, hr) {
+  clear: both;
+}
+
+@media all and (max-width: 600px) {
+  .markdown-rendered img.remarkable-float {
+    float: none;
+    max-width: min(100%, 20rem);
+    margin: 1rem auto;
+  }
+
+  .markdown-rendered img.remarkable-float-left + p,
+  .markdown-rendered img.remarkable-float-right + p {
+    display: block;
+  }
+}
+
+// Obsidian Columns compatibility. Author bounded, responsive column regions
+// with `> [!col]` and nested `> [!col-md-N]` callouts. The N value is the
+// column's relative flex weight, e.g. 1 beside 3 for an image/prose layout.
+.markdown-rendered .callout[data-callout="col"] {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin: 1.25rem 0;
+  overflow: visible;
+}
+
+.markdown-rendered .callout[data-callout="col"] > .callout-title,
+.markdown-rendered .callout[data-callout^="col-md"] > .callout-title {
+  display: none;
+}
+
+.markdown-rendered .callout[data-callout="col"] > .callout-content {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  overflow: visible;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  > .callout-content
+  > .callout[data-callout^="col-md"] {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+// Specify the complete flex shorthand so another stylesheet cannot reset the
+// basis and accidentally turn a weighted layout back into equal columns.
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-1"] {
+  flex: 1 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-2"] {
+  flex: 2 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-3"] {
+  flex: 3 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-4"] {
+  flex: 4 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-5"] {
+  flex: 5 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-6"] {
+  flex: 6 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-7"] {
+  flex: 7 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-8"] {
+  flex: 8 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-9"] {
+  flex: 9 1 0 !important;
+}
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout="col-md-10"] {
+  flex: 10 1 0 !important;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout^="col-md"]
+  > .callout-content {
+  display: block;
+  overflow: visible;
+}
+
+// An alignment block opts its column into a full-height flex container. Plain
+// columns retain ordinary Markdown flow and therefore their natural alignment.
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout^="col-md"]:has(> .callout-content > .callout[data-callout^="align-"]) {
+  display: flex;
+  flex-direction: column;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout^="col-md"]:has(> .callout-content > .callout[data-callout^="align-"])
+  > .callout-content {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+// Explicit alignment blocks live inside a `col-md-N` block. For example:
+// >>> [!align-center] centers its contents in both axes.
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout^="align-"] {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.markdown-rendered .callout[data-callout="col"] .callout[data-callout^="align-"] > .callout-title {
+  display: none;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout^="align-"]
+  > .callout-content {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout^="align-"]
+  > .callout-content
+  > p {
+  margin: 0;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout:is(
+    [data-callout="align-top"],
+    [data-callout="align-top-left"],
+    [data-callout="align-top-right"]
+  )
+  > .callout-content {
+  align-items: flex-start;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout:is(
+    [data-callout="align-bottom"],
+    [data-callout="align-bottom-left"],
+    [data-callout="align-bottom-right"]
+  )
+  > .callout-content {
+  align-items: flex-end;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-left"]
+  > .callout-content,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-top-left"]
+  > .callout-content,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-bottom-left"]
+  > .callout-content {
+  justify-content: flex-start;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-right"]
+  > .callout-content,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-top-right"]
+  > .callout-content,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-bottom-right"]
+  > .callout-content {
+  justify-content: flex-end;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-left"]
+  > .callout-content
+  > p,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-top-left"]
+  > .callout-content
+  > p,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-bottom-left"]
+  > .callout-content
+  > p {
+  text-align: left;
+}
+
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-right"]
+  > .callout-content
+  > p,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-top-right"]
+  > .callout-content
+  > p,
+.markdown-rendered
+  .callout[data-callout="col"]
+  .callout[data-callout="align-bottom-right"]
+  > .callout-content
+  > p {
+  text-align: right;
+}
+
+.markdown-rendered .callout[data-callout="col"] img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media all and (max-width: 700px) {
+  .markdown-rendered .callout[data-callout="col"] > .callout-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .markdown-rendered
+    .callout[data-callout="col"]
+    > .callout-content
+    > .callout[data-callout^="col-md"] {
+    width: 100%;
+  }
+
+  .markdown-rendered .callout[data-callout="col"] .callout[data-callout^="align-"] {
+    height: auto;
+  }
+}
